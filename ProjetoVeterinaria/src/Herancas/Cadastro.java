@@ -1,9 +1,15 @@
 package Herancas;
 
-public class Cadastro extends Servico {
+import javax.swing.JOptionPane;
 
-@Override
+public class Cadastro extends Servico {
+    private Animal animalCadastrado;
+    private Medico medicoCadastrado;
+    private String[] opcoes = {"Animal Exótico", "Animal Doméstico"};
+
+    @Override
     public void cadastrarAnimal() {
+        animalCadastrado = new Animal();
 
         // TIPO DO ANIMAL (EXÓTICO OU NÃO)
 
@@ -30,6 +36,7 @@ public class Cadastro extends Servico {
 
         // NOME DO ANIMAL
         String animalNome;
+
         while (true) {
             animalNome = JOptionPane.showInputDialog("Digite o nome do seu animal: ");
 
@@ -38,9 +45,8 @@ public class Cadastro extends Servico {
             } else {
                 break;
             }
+            animalCadastrado.setNomeAnimal(animalNome);
         }
-
-        setNomeAnimal(animalNome);
 
 
         // IDADE DO ANIMAL
@@ -58,9 +64,8 @@ public class Cadastro extends Servico {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Digite um número válido!");
             }
+            animalCadastrado.setIdadeAnimal(salvarIdade);
         }
-
-        setIdadeAnimal(salvarIdade);
 
 
         // PORTE DO ANIMAL (P, M ou G)
@@ -80,15 +85,15 @@ public class Cadastro extends Servico {
             } else {
                 JOptionPane.showMessageDialog(null, "Digite apenas P, M ou G.");
             }
+            animalCadastrado.setPorteAnimal(animalPorte);
         }
-
-        setPorteAnimal(animalPorte);
 
 
         // DOSES DE VACINA
 
 
         int salvarDoses = 0;
+        setNumeroDosesVacina(salvarDoses);
         while (true) {
             String animalDoses = JOptionPane.showInputDialog("Quantas doses da vacina seu animal tomou: ");
 
@@ -102,11 +107,18 @@ public class Cadastro extends Servico {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Digite um número inteiro válido!");
             }
+            animalCadastrado.setNumeroDosesVacina(salvarDoses);
         }
 
-        setNumeroDosesVacina(salvarDoses);
+        GerenciarClinica.adicionarCadastro(this);
+
+        JOptionPane.showMessageDialog(null, "Animal '" + animalCadastrado.getNomeAnimal() + "' cadastrado com sucesso!");
     }
 
+    @Override
+    public void notificar() {
+
+    }
 
     @Override
     public void enviarNotificacao() {
@@ -117,5 +129,18 @@ public class Cadastro extends Servico {
     public void cadastrarMedico() {
 
     }
-}
 
+    public Animal getAnimalCadastrado() {
+        return animalCadastrado;
+    }
+
+    public Medico getMedicoCadastrado() {
+        return medicoCadastrado;
+    }
+    public void setAnimalCadastrado(Animal animalCadastrado) {
+        this.animalCadastrado = animalCadastrado;
+    }
+    public void setMedicoCadastrado(Medico medicoCadastrado) {
+        this.medicoCadastrado = medicoCadastrado;
+    }
+}
